@@ -85,3 +85,58 @@ fun isBalanced(s: String): String {
     return result
 
 }
+
+
+fun equalStacks(h1: Array<Int>, h2: Array<Int>, h3: Array<Int>): Int {
+
+    val s1 = Stack<Int>()
+    val s2 = Stack<Int>()
+    val s3 = Stack<Int>()
+
+    var ha1 = 0
+    var ha2 = 0
+    var ha3 = 0
+    var minHeight = 0
+
+    for (x in h1.size - 1 downTo 0) {
+        s1.push(h1[x])
+        ha1 += h1[x]
+    }
+    for (x in h2.size - 1 downTo 0) {
+        s2.push(h2[x])
+        ha2 += h2[x]
+    }
+    for (x in h3.size - 1 downTo 0) {
+        s3.push(h3[x])
+        ha3 += h3[x]
+    }
+
+    minHeight = Math.min(ha1, Math.min(ha2, ha3))
+
+    while (ha1 != ha2 || ha1 != ha3) {
+
+        while (ha1 > minHeight) {
+            ha1 -= s1.pop()
+        }
+        minHeight = Math.min(ha1, Math.min(ha2, ha3))
+
+
+        while (ha2 > minHeight) {
+            ha2 -= s2.pop()
+        }
+        minHeight = Math.min(ha1, Math.min(ha2, ha3))
+
+
+        while (ha3 > minHeight) {
+            ha3 -= s3.pop()
+        }
+        minHeight = Math.min(ha1, Math.min(ha2, ha3))
+
+
+    }
+
+
+
+    return minHeight
+
+}
