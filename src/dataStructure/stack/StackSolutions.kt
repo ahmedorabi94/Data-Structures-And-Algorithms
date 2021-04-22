@@ -51,3 +51,37 @@ fun getMax(operations: Array<String>): Array<Int> {
     return result.toTypedArray()
 
 }
+
+
+fun isBalanced(s: String): String {
+
+    if (s.isEmpty()) {
+        return "NO"
+    }
+
+    var result = "NO"
+    val stack = Stack<Char>()
+
+    for (c in s.toCharArray()) {
+
+        if (c == '(' || c == '[' || c == '{') {
+            stack.push(c)
+            // Check stack for corresponding closing parentheses, false if not valid
+        } else if (c == ')' && !stack.empty() && stack.peek() == '(') {
+            stack.pop()
+        } else if (c == ']' && !stack.empty() && stack.peek() == '[') {
+            stack.pop()
+        } else if (c == '}' && !stack.empty() && stack.peek() == '{') {
+            stack.pop()
+        } else {
+            return "NO"
+        }
+
+    }
+    if (stack.isEmpty()) {
+        result = "YES"
+    }
+
+    return result
+
+}
