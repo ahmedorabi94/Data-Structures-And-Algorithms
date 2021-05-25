@@ -140,3 +140,16 @@ fun equalStacks(h1: Array<Int>, h2: Array<Int>, h3: Array<Int>): Int {
     return minHeight
 
 }
+
+
+
+fun main(args: Array<String>) {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT. */
+
+    val scanner = Scanner(System.`in`)
+
+
+
+
+}
+
