@@ -4,8 +4,8 @@ fun mergeSort(arr: IntArray, low: Int, high: Int) {
     val size = arr.size
     if (low < high) {
         val middle = (low + high) / 2
-        mergeSort(arr, low, middle)
-        mergeSort(arr, middle + 1, high)
+        mergeSort(arr, low, middle)  // 0 , 1
+        mergeSort(arr, middle + 1, high) //0,1
         merge(arr, low, middle, high)
     }
 }
