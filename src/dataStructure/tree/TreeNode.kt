@@ -10,7 +10,7 @@ data class TreeNode(var value: Char, var left: TreeNode? = null, var right: Tree
 
     // preorder
     fun print(){
-        // preorder
+        // preorder print parent first then all elements on left first then go right and repeat again
         println(this.value)
 
         if (this.left != null){
@@ -18,14 +18,14 @@ data class TreeNode(var value: Char, var left: TreeNode? = null, var right: Tree
         }
 
 
-        // inOrder     println(this.value)
+        // inOrder     println(this.value)   print  all elements on left first from bottom then parent then go right then repeat again
 
         if (this.right != null){
             this.right!!.print()
         }
 
 
-        // postOrder     println(this.value)
+        // postOrder     println(this.value)   print  all elements on left first from bottom then go right then parent then repeat again
 
     }
 
