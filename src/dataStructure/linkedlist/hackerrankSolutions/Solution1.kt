@@ -1,5 +1,7 @@
 package dataStructure.linkedlist.hackerrankSolutions
 
+import java.util.*
+
 
 data class SinglyLinkedListNode(var data: Int, var next: SinglyLinkedListNode? = null)
 
@@ -229,3 +231,43 @@ public static Node removeDuplicates(Node head) {
 
 * */
 
+//////////////////////////////////////////////////////////
+//fun deep_copy_arbitrary_pointer(
+//        head: LinkedListNode?): LinkedListNode? {
+//    if (head == null) {
+//        return null
+//    }
+//    var current: LinkedListNode? = head
+//    var new_head: LinkedListNode? = null
+//    var new_prev: LinkedListNode? = null
+//    val map: Hashtable<LinkedListNode, LinkedListNode> = Hashtable<LinkedListNode, LinkedListNode>()
+//
+//    // create copy of the linked list, recording the corresponding
+//    // nodes in hashmap without updating arbitrary pointer
+//    while (current != null) {
+//        val new_node = LinkedListNode(
+//                current.data)
+//
+//        // copy the old arbitrary pointer in the new node
+//        new_node.arbitrary_pointer = current.arbitrary_pointer
+//        if (new_prev != null) {
+//            new_prev.next = new_node
+//        } else {
+//            new_head = new_node
+//        }
+//        map.put(current, new_node)
+//        new_prev = new_node
+//        current = current.next
+//    }
+//    var new_current: LinkedListNode? = new_head
+//
+//    // updating arbitrary_pointer
+//    while (new_current != null) {
+//        if (new_current.arbitrary_pointer != null) {
+//            val node: LinkedListNode = map.get(new_current.arbitrary_pointer)
+//            new_current.arbitrary_pointer = node
+//        }
+//        new_current = new_current.next
+//    }
+//    return new_head
+//}

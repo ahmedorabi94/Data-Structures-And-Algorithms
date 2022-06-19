@@ -1,7 +1,7 @@
 package dataStructure.stack
 
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 fun getMax(operations: Array<String>): Array<Int> {
 
@@ -86,6 +86,132 @@ fun isBalanced(s: String): String {
 
 }
 
+fun isValid(s: String): Boolean {
+    val map = HashMap<Char, Char>()
+    map['('] = ')'
+    map['['] = ']'
+    map['{'] = '}'
+    val stack = Stack<Char>()
+    for (element in s) {
+        val curr = element
+        if (map.keys.contains(curr)) {
+            stack.push(curr)
+        } else if (map.values.contains(curr)) {
+            if (!stack.empty() && map[stack.peek()] == curr) {
+                stack.pop()
+            } else {
+                return false
+            }
+        }
+    }
+    return stack.empty()
+}
+
+//Input: nums = [23,2,4,6,7], k = 6
+//Output: true
+//Explanation: [2, 4] is a continuous subarray of size 2 whose elements sum up to 6.
+
+fun checkSubarraySum(nums: IntArray?, k: Int): Boolean {
+    if (nums == null || nums.size <= 1) {
+        return false
+    }
+    val map = HashMap<Int, Int>()
+    map.put(0, -1)
+
+    var preSum = 0
+
+    for (i in nums.indices) {
+        preSum += nums[i]
+        val mod = if (k == 0) preSum else preSum % k
+        // 8
+        //1
+        //8
+        if (map.containsKey(mod) && i - map[mod]!! > 1) {
+            return true
+        }
+        if (!map.containsKey(mod)) {
+            map.put(mod, i)
+        }
+
+    }
+
+    return false
+}
+
+fun checkSubarraySumTwo(nums: IntArray?, k: Int): Boolean {
+    if (nums == null || nums.size <= 1) {
+        return false
+    }
+    var sum = 0
+
+    for (i in nums.indices) {
+        sum += nums[i]
+
+        for (j in 1 until nums.size) {
+            if (sum == k) {
+                println("Sum is " + sum)
+                println("Found number i $i , j ${j - 1}")
+                return true
+            }
+
+            if (sum > k) {
+                sum = 0
+                break
+            }
+
+            sum += nums[j]
+        }
+
+    }
+
+    return false
+}
+
+//Input: s = "cbaebabacd", p = "abc"
+//Output: [0,6]
+fun findAnagrams(s: String?, p: String): List<Int?>? {
+    val rst = ArrayList<Int>()
+    if (s == null || s.isEmpty() || s.length < p.length) {
+        return rst
+    }
+    val map_p = IntArray(26)
+    for (element in p) {
+      //  map_p[element - 'a']++
+        map_p[element - 'a'] = map_p[element - 'a'] + 1
+    }
+//    map_p.forEach {
+//        println(it)
+//    }
+//    println('c' - 'a')
+//    println(map_p[0])
+//    println(map_p[1])
+   // println(map_p[2])
+
+    for (i in 0 until s.length - p.length) {
+        val map_s = IntArray(26)
+        for (j in p.indices) {
+            map_s[s[i + j] - 'a']++
+        }
+        map_s.forEach {
+            println(it)
+        }
+        if (isMatch(map_p, map_s)) {
+            rst.add(i)
+        }
+    }
+
+    return rst
+}
+
+fun isMatch(arr1: IntArray, arr2: IntArray): Boolean {
+    for (i in arr1.indices) {
+        if (arr1[i] != arr2[i]) {
+            return false
+        }
+    }
+    return true
+}
+
 
 fun equalStacks(h1: Array<Int>, h2: Array<Int>, h3: Array<Int>): Int {
 
@@ -142,14 +268,120 @@ fun equalStacks(h1: Array<Int>, h2: Array<Int>, h3: Array<Int>): Int {
 }
 
 
+fun findX(p: String){
+    val map_p = IntArray(26)
+    for (element in p) {
+        //  map_p[element - 'a']++
+        map_p[element - 'a'] = map_p[element - 'a'] + 1
+    }
+    val list = ArrayList<Int>()
+    map_p.forEach {
+        print("${it} ")
+        if (it != 0){
+            list.add(it)
+        }
+    }
+    val ref = list[0]
+    var result = true
+    for (i in 1 until list.size){
+        if (ref != list[i]){
+            result = false
+            break
+        }
+    }
+
+   println(result)
+}
+
+// "the sky is blue"
+//151. Reverse Words in a String
+fun reverseWords(s: String): String {
+    val result = StringBuilder()
+
+    val x = s.trim().replace("\\s+".toRegex(), " ")
+    val list = x.split(" ")
+    for(i in list.size -1 downTo 0){
+        result.append(list[i] + " ")
+    }
+
+    return result.toString().trim()
+}
+
+fun reverseOnlyLetters(S: String): String? {
+    val sb = StringBuilder(S)
+    var i = 0
+    var j = S.length - 1
+    while (i < j) {
+        if (!Character.isLetter(sb[i])) {
+            ++i
+        } else if (!Character.isLetter(sb[j])) {
+            --j
+        } else {
+            sb.setCharAt(i, S[j])
+            sb.setCharAt(j--, S[i++])
+        }
+    }
+    return sb.toString()
+}
+
+fun removeDuplicateLetters(s: String): String {
+    val sb = StringBuilder()
+    val set = HashSet<Char>()
+
+    for (element in s){
+//        if (set.add(element)){
+//            sb.append(element)
+//        }
+        set.add(element)
+    }
+    set.forEach{
+        sb.append(it)
+    }
+
+    return sb.toString()
+}
+
+
+//Input: nums = [4,7,9,10], k = 1
+//Output: 5
+//Explanation: The first missing number is 5.
+fun missingElement(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val leftMost = nums[0]
+    var si = 0
+    var ei = n - 1
+
+    while (si <= ei) {
+        val mid = si + (ei - si) / 2
+        // missing element in b/w leftmost and nums[mid]
+        val missingCount = nums[mid] - (leftMost + mid)   /// 7 - (4 + 1)  = 2
+        if (missingCount < k) {
+            // potential answer on be right side
+            si = mid + 1
+        } else {
+            // potential answer on be left side
+            ei = mid - 1
+        }
+    }
+    // After the end of loop  ei will be on correct position
+    // nums[ei] can be our potential answer
+    //lostCount will contain How many elements we lost from leftMost
+    val lostCount = nums[ei] - (leftMost + ei)
+    // check how much element missed out on ei from leftMost k-lostedCount
+    val diff = k - lostCount
+    // add that diff in nums[ei]
+    return nums[ei] + diff
+}
 
 fun main(args: Array<String>) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT. */
-
-    val scanner = Scanner(System.`in`)
-
-
-
-
+    // val scanner = Scanner(System.`in`)
+    // println(checkSubarraySumTwo(intArrayOf(23, 2, 4, 6, 7), 6))
+    //println(findAnagrams("cbaebabacd", "abc"))
+   // findX("abacbc")
+  //  println(reverseWords("a good   example"))
+  //  println(reverseOnlyLetters("ab-cd"))
+  //  println(removeDuplicateLetters("bcabc"))
+    println(missingElement(intArrayOf(4,7,9,10),1))
 }
 

@@ -83,3 +83,15 @@ fun topView(root: TreeNode2?) {
 
 
 }
+
+fun levelOrder(root: TreeNode2) {
+    val queue: Queue<TreeNode2> = LinkedList<TreeNode2>()
+    queue.add(root)
+    while (!queue.isEmpty()) {
+        val tempNode: TreeNode2 = queue.poll()
+        System.out.printf("%d ", tempNode.data)
+        if (tempNode.left != null) queue.add(tempNode.left)
+        if (tempNode.right != null) queue.add(tempNode.right)
+    }
+}
+
