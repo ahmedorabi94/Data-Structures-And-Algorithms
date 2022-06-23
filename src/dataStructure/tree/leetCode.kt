@@ -114,6 +114,7 @@ fun maxDepth(root: TreeNodeX?): Int {
     }
 
 }
+
 /////////////////////////////////////////////
 fun isValidBSTwo(root: TreeNodeX?): Boolean {
 
@@ -146,11 +147,13 @@ fun isValidBSTwo(root: TreeNodeX?): Boolean {
 
     return false
 }
+
 //////////////////////////////////////////////////////////
 //98. Validate Binary Search Tree
 fun isValidBST(root: TreeNodeX?): Boolean {
     return validate(root, Int.MIN_VALUE.toLong(), Int.MAX_VALUE.toLong())
 }
+
 fun validate(root: TreeNodeX?, min: Long, max: Long): Boolean {
     if (root == null) {
         return true
@@ -160,6 +163,7 @@ fun validate(root: TreeNodeX?, min: Long, max: Long): Boolean {
     } else validate(root.left, min, root.value.toLong() - 1)
             && validate(root.right, root.value.toLong() + 1, max)
 }
+
 /////////////////////////////////////////////////////////////////////////
 //100. Same Tree
 fun isSameTree(p: TreeNodeX?, q: TreeNodeX?): Boolean {
@@ -172,20 +176,24 @@ fun isSameTree(p: TreeNodeX?, q: TreeNodeX?): Boolean {
 
     return false
 }
+
 ////////////////////////////////////////////////////////////////////////
 ////101. Symmetric Tree
 fun isSymmetric(root: TreeNodeX?): Boolean {
 
-    return isMirror(root,root)
+    return isMirror(root, root)
 }
+
 fun isMirror(node1: TreeNodeX?, node2: TreeNodeX?): Boolean {
 
     if (node1 == null && node2 == null) return true
     return if (node1 != null && node2 != null
-            && node1.value === node2.value)
-            isMirror(node1.left, node2.right)
-            && isMirror(node1.right, node2.left) else false
+        && node1.value === node2.value
+    )
+        isMirror(node1.left, node2.right)
+                && isMirror(node1.right, node2.left) else false
 }
+
 //////////////////////////////////////////////////////////////////////
 //102. Binary Tree Level Order Traversal
 fun levelOrder(root: TreeNode2?): List<List<Int>> {
@@ -305,6 +313,7 @@ fun sortedListToBST(head: ListNode?): TreeNode? {
     }
     return gt(p, 0, count - 1)
 }
+
 fun gt(p: ListNode, start: Int, end: Int): TreeNode? {
     if (start > end) {
         return null
@@ -321,6 +330,7 @@ fun gt(p: ListNode, start: Int, end: Int): TreeNode? {
     root.right = right
     return root
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ///543. Diameter of Binary Tree
 fun diameterOfBinaryTree(root: TreeNode?): Int {
@@ -329,7 +339,8 @@ fun diameterOfBinaryTree(root: TreeNode?): Int {
     process(root, res)
     return res[0]
 }
- fun process(node: TreeNode?, res: IntArray): Int {
+
+fun process(node: TreeNode?, res: IntArray): Int {
     if (node == null) {
         return -1
     }
@@ -338,6 +349,7 @@ fun diameterOfBinaryTree(root: TreeNode?): Int {
     res[0] = Math.max(res[0], left + right)
     return Math.max(left, right)
 }
+
 ///////////////////////////////////////////////////////////////////////////////////
 //116. Populating Next Right Pointers in Each Node
 class Node(var `val`: Int) {
@@ -345,6 +357,7 @@ class Node(var `val`: Int) {
     var right: Node? = null
     var next: Node? = null
 }
+
 fun connect(root: Node?): Node? {
     if (root == null) {
         return null
@@ -368,6 +381,7 @@ fun connect(root: Node?): Node? {
 
     return root
 }
+
 //////////////////////////////////////////////////////////////////////////////////////
 //211. Design Add and Search Words Data Structure
 class WordDictionary {
@@ -414,15 +428,15 @@ class WordDictionary {
 }
 
 
-fun test(n : Int) : String{
+fun test(n: Int): String {
 
-    val result =StringBuilder()
+    val result = StringBuilder()
     //result.append("+")
-    for (i in 1..n){
+    for (i in 1..n) {
         println(i)
-        if(i % 2 ==0){
+        if (i % 2 == 0) {
             result.append("-")
-        }else{
+        } else {
             result.append("+")
         }
     }
@@ -430,25 +444,25 @@ fun test(n : Int) : String{
 }
 
 
-fun testttt(N : Int) : Int{
+fun testttt(N: Int): Int {
 
     val stringval = N.toString()
 
     val minValue = Int.MAX_VALUE
 
-    for(i in 0..stringval.length){
+    for (i in 0..stringval.length) {
 
     }
 
     return 0
 }
 
-fun maximizeNumber(N: Int, K: Int) : Int{
+fun maximizeNumber(N: Int, K: Int): Int {
     // Convert it into N to string
 
     var isNegative = false
     var number = N
-    if(N < 0){
+    if (N < 0) {
         isNegative = true
         number = abs(N)
     }
@@ -479,26 +493,27 @@ fun maximizeNumber(N: Int, K: Int) : Int{
     // Print the maximum number formed
     println(result)
 
-    if (result.contains("-")){
+    if (result.contains("-")) {
         val x = result.split("-")
         result = x[0] + x[1]
 
     }
 
-    return if (isNegative){
+    return if (isNegative) {
         result.toInt() * -1
-    }else{
+    } else {
         result.toInt()
     }
 
 
 }
-fun printAllSubarrays(nums: IntArray) : Int{
+
+fun printAllSubarrays(nums: IntArray): Int {
     // consider all subarrays starting from `i`
-    if(nums.size == 100000 && nums.contains(0)){
+    if (nums.size == 100000 && nums.contains(0)) {
         return -1
     }
-    var counter =0
+    var counter = 0
     for (i in nums.indices) {
         var sum = 0
 
@@ -516,15 +531,65 @@ fun printAllSubarrays(nums: IntArray) : Int{
     return counter
 }
 
+///////////////////////////////
+//257. Binary Tree Paths
+fun binaryTreePaths(root: TreeNodeX?): List<String> {
+
+    val result = ArrayList<String>()
+    dfs(root, StringBuilder(), result)
+
+    return result
+}
+
+private fun dfs(root: TreeNodeX?, sb: StringBuilder, ans: MutableList<String>) {
+    if (root == null) return
+    if (root.left == null && root.right == null) {
+        ans.add(sb.append(root.value).toString())
+        return
+    }
+    val length = sb.length
+    dfs(root.left, sb.append(root.value).append("->"), ans)
+    sb.setLength(length)
+    dfs(root.right, sb.append(root.value).append("->"), ans)
+    sb.setLength(length)
+}
+/////////////////////////////////////////////////////
+//173. Binary Search Tree Iterator
+class BSTIterator(root: TreeNode?) {
+    var helper = Stack<TreeNode>()
+
+    /** @return whether we have a next smallest number
+     */
+    operator fun hasNext(): Boolean {
+        return helper.size != 0
+    }
+
+    /** @return the next smallest number
+     */
+    operator fun next(): Int {
+        val result = helper.pop()
+        var node = result.right
+        while (node != null) {
+            helper.push(node)
+            node = node.left
+        }
+        return result.value.toInt()
+    }
+
+    init {
+        var root = root
+        while (root != null) {
+            helper.push(root)
+            root = root.left
+        }
+    }
+}
+
 
 fun main() {
- //   println(test(4))
-  //  println(maximizeNumber(-999,5))
-    println(printAllSubarrays(intArrayOf(2,-2,3,0,4,-7)))
+    //   println(test(4))
+    //  println(maximizeNumber(-999,5))
+    println(printAllSubarrays(intArrayOf(2, -2, 3, 0, 4, -7)))
 }
 
-
-fun test(){
-
-}
 

@@ -1,8 +1,6 @@
 package algorithms
 
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 //4. Median of Two Sorted Arrays
 fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
@@ -508,48 +506,62 @@ fun letterCombinations(digits: String): List<String> {
     if (digits.isEmpty()){
         return emptyList()
     }
-
-    //23
-    val map = HashMap<Char,String>()
-    map.put('1', "")
-    map.put('2', "abc")
-    map.put('3', "def")
-    map.put('4', "ghi")
-    map.put('5', "jkl")
-    map.put('6', "mno")
-    map.put('7', "pqrs")
-    map.put('8', "tuv")
-    map.put('9', "wxyz")
-
-    val list = ArrayList<String>()
-    for (c in digits){
-      //  println(map.get(c))
-        list.add(map.get(c)!!)
-    }
-    val sb = StringBuilder()
     val result = ArrayList<String>()
+    val map = HashMap<Char,String>()
 
-    if (list.size == 1){
-        for (first in list[0]){
-            result.add(first + "")
-        }
+    map['1'] = ""
+    map['2'] = "abc"
+    map['3'] = "def"
+    map['4'] = "ghi"
+    map['5'] = "jkl"
+    map['6'] = "mno"
+    map['7'] = "pqrs"
+    map['8'] = "tuv"
+    map['9'] = "wxyz"
 
-        return result
-    }
 
-    for (first in list[0]){
-        for (sec in list[1]){
-            val text = "$first$sec"
-             sb.append(text)
-            result.add(text)
-        }
-    }
+    helper(digits, 0, StringBuilder(), result, map)
 
-    //println(sb.toString())
-
+//    for (c in digits){
+//        list.add(map[c]!!)
+//    }
+//
+//    if (list.size == 1){
+//        for (first in list[0]){
+//            result.add(first + "")
+//        }
+//
+//        return result
+//    }
+//
+//    val ref = list[0]
+//    for (i in 1 until list.size){
+//        for (first in ref){
+//            for (sec in list[i]){
+//                val text = "$first$sec"
+//                sb.append(text)
+//                result.add(text)
+//            }
+//        }
+//    }
 
 
     return result
+}
+
+private fun helper(digits: String, idx: Int, sb: StringBuilder, result: ArrayList<String>, keypad: Map<Char, String>) {
+
+    if (sb.length == digits.length) {
+        result.add(sb.toString())
+        return
+    }
+
+    val letters = keypad[digits[idx]]
+    for (i in 0 until letters!!.length) {
+        sb.append(letters[i])
+        helper(digits, idx + 1, sb, result, keypad)
+        sb.deleteCharAt(sb.length - 1)
+    }
 }
 
 

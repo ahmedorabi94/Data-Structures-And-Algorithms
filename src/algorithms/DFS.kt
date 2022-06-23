@@ -29,6 +29,7 @@ fun numIslands(grid: Array<CharArray>): Int {
 
     return count
 }
+
 fun dfs(grid: Array<CharArray>, m: Int, n: Int, i: Int, j: Int) {
     if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != '1') {
         return
@@ -56,6 +57,7 @@ fun exist(board: Array<CharArray>, word: String): Boolean {
     }
     return false
 }
+
 fun search(board: Array<CharArray>, word: String, i: Int, j: Int, matched: Int): Boolean {
     if (matched == word.length) {
         return true
@@ -65,10 +67,10 @@ fun search(board: Array<CharArray>, word: String, i: Int, j: Int, matched: Int):
     }
     board[i][j] = '#'
     val result =
-            search(board, word, i - 1, j, matched + 1) ||
-                    search(board, word, i + 1, j, matched + 1) ||
-                    search(board, word, i, j - 1, matched + 1) ||
-                    search(board, word, i, j + 1, matched + 1)
+        search(board, word, i - 1, j, matched + 1) ||
+                search(board, word, i + 1, j, matched + 1) ||
+                search(board, word, i, j - 1, matched + 1) ||
+                search(board, word, i, j + 1, matched + 1)
 
     board[i][j] = word[matched]
     return result
@@ -151,7 +153,15 @@ fun findWords(board: Array<CharArray>, words: Array<String>): MutableList<String
     return LinkedList<String>(result)
 }
 
-fun dfs2(pt: Trie, i: Int, j: Int, board: Array<CharArray>, visited: Array<BooleanArray>, s: String, result: MutableSet<String>) {
+fun dfs2(
+    pt: Trie,
+    i: Int,
+    j: Int,
+    board: Array<CharArray>,
+    visited: Array<BooleanArray>,
+    s: String,
+    result: MutableSet<String>
+) {
     var s = s
     if (i < 0 || i >= visited.size || j < 0 || j >= visited[0].size) {
         return
@@ -173,6 +183,7 @@ fun dfs2(pt: Trie, i: Int, j: Int, board: Array<CharArray>, visited: Array<Boole
     dfs2(pt, i, j + 1, board, visited, s, result)
     visited[i][j] = false
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //417. Pacific Atlantic Water Flow
 fun pacificAtlantic(heights: Array<IntArray>?): List<List<Int>> {
@@ -201,9 +212,11 @@ fun pacificAtlantic(heights: Array<IntArray>?): List<List<Int>> {
     }
     return result
 }
+
 fun dfs(matrix: Array<IntArray>, x: Int, y: Int, prevWaterHeight: Int, visited: Array<BooleanArray>) {
     if (x < 0 || y < 0 || x >= matrix.size || y >= matrix[x].size || visited[x][y]
-            || prevWaterHeight > matrix[x][y]) {
+        || prevWaterHeight > matrix[x][y]
+    ) {
         return
     }
     val height = matrix[x][y]
@@ -225,6 +238,7 @@ fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
     dfs(candidates, target, 0, ArrayList(), result)
     return result
 }
+
 fun dfs(candidates: IntArray, target: Int, idx: Int, tempResult: MutableList<Int>, result: MutableList<List<Int>>) {
     if (target < 0) {
         return
@@ -280,7 +294,10 @@ fun helper(board: Array<CharArray>, row: Int, col: Int, root: TrieNodeX?, result
         root.word = null
         return
     }
-    if (row < 0 || col < 0 || row >= board.size || col >= board[row].size || board[row][col] == '.' || root!!.children.get(board[row][col] - 'a') == null) {
+    if (row < 0 || col < 0 || row >= board.size || col >= board[row].size || board[row][col] == '.' || root!!.children.get(
+            board[row][col] - 'a'
+        ) == null
+    ) {
         return
     }
     val c = board[row][col]
@@ -291,6 +308,7 @@ fun helper(board: Array<CharArray>, row: Int, col: Int, root: TrieNodeX?, result
     helper(board, row, col - 1, root.children[c - 'a'], result)
     board[row][col] = c
 }
+
 /////////////////////////////////////////////////////////////////////////////
 //529. Minesweeper
 fun updateBoard(board: Array<CharArray>, click: IntArray): Array<CharArray> {
@@ -302,7 +320,16 @@ fun updateBoard(board: Array<CharArray>, click: IntArray): Array<CharArray> {
     return board
 }
 
-private val dirs = arrayOf(intArrayOf(-1, -1), intArrayOf(-1, 0), intArrayOf(-1, 1), intArrayOf(0, -1), intArrayOf(0, 1), intArrayOf(1, -1), intArrayOf(1, 0), intArrayOf(1, 1))
+private val dirs = arrayOf(
+    intArrayOf(-1, -1),
+    intArrayOf(-1, 0),
+    intArrayOf(-1, 1),
+    intArrayOf(0, -1),
+    intArrayOf(0, 1),
+    intArrayOf(1, -1),
+    intArrayOf(1, 0),
+    intArrayOf(1, 1)
+)
 
 fun dfs(board: Array<CharArray>, i: Int, j: Int) {
     if (i < 0 || i == board.size || j < 0 || j == board[0].size) return
@@ -322,4 +349,35 @@ fun getMinesCount(board: Array<CharArray>, i: Int, j: Int): Int {
     }
     return minesCount
 }
+
 //////////////////////////////////////////////////////////////////////
+//133. Clone Graph
+class Node(var `val`: Int) {
+    var neighbors: ArrayList<Node?> = ArrayList<Node?>()
+}
+
+fun cloneGraph(node: Node?): Node? {
+    val m = HashMap<Node, Node> ()
+    return helper(node,m)
+}
+
+private fun helper(node : Node? , map : HashMap<Node,Node>) : Node?{
+    if (node == null){
+        return null
+    }
+
+    if (map.containsKey(node)){
+        return map[node]
+    }
+
+    val copy = Node(node.`val`)
+    map[node] = copy
+
+    for (neighbour in node.neighbors){
+        val neighbourCopy = helper(neighbour,map)
+        map[node]?.neighbors?.add(neighbourCopy)
+    }
+
+
+    return map[node]
+}
