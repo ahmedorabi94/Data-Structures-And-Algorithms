@@ -18,6 +18,7 @@ fun twoSum(nums: IntArray, target: Int): IntArray {
     }
     return intArrayOf()
 }
+
 // (2,7,11,15)  9
 fun twoSumUsingHashMap(nums: IntArray, target: Int): IntArray {
 
@@ -34,6 +35,7 @@ fun twoSumUsingHashMap(nums: IntArray, target: Int): IntArray {
     return intArrayOf()
 
 }
+
 fun twoSumX(nums: IntArray, target: Int): IntArray? {
 
     val numToIndex: MutableMap<Int, Int?> = HashMap()
@@ -162,6 +164,7 @@ fun isValid(s: String?): Boolean {
 
     return stack.empty()
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 fun strStr(haystack: String, needle: String): Int {
 
@@ -351,20 +354,16 @@ fun isIsomorphic(s: String, t: String): Boolean {
     return true
 }
 
-fun isPalindrome(s: String): Boolean {
+//9. Palindrome Number
+fun isPalindrome(s: Int): Boolean {
 
     val sb = StringBuilder()
-
-    for (x in s) {
-        if (x.isLetterOrDigit()) {
-            sb.append(x.toLowerCase())
-        }
+    for (x in s.toString()) {
+        sb.append(x.toLowerCase())
     }
     println(sb.toString())
 
     val str = sb.toString()
-
-
     val x = 0 + str.length / 2
 
     for (i in 0 until x) {
@@ -378,6 +377,7 @@ fun isPalindrome(s: String): Boolean {
 
     return true
 }
+
 /////////////////////////////////////////////////////////////
 //121. Best Time to Buy and Sell Stock
 //[7,1,5,3,6,4]
@@ -400,6 +400,7 @@ fun maxProfit(prices: IntArray): Int {
 
     return profit
 }
+
 //////////////////////////////////////////////////////////////////////
 //155. Min Stack
 class MinStack() {
@@ -410,7 +411,7 @@ class MinStack() {
         stack.push(x)
 
         if (!minStack.isEmpty()) {
-            if (x <= minStack.peek()){
+            if (x <= minStack.peek()) {
                 minStack.push(x)
             }
         } else {
@@ -438,12 +439,13 @@ class MinStack() {
     }
 
 }
+
 /////////////////////////////////////////////////////////////
 fun main() {
 
-    val result = isPalindrome("a.")
+    val result = isPalindrome(121)
 
-   // val result = twoSumUsingHashMap(intArrayOf(2,7,11,15),9)
+    // val result = twoSumUsingHashMap(intArrayOf(2,7,11,15),9)
 
     println(result)
 }
