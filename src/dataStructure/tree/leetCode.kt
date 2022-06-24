@@ -36,7 +36,7 @@ fun traversePreOrder(root: TreeNodeX?, arr: ArrayList<Int>) {
     }
 }
 
-
+//94. Binary Tree Inorder Traversal
 fun inorderTraversal(root: TreeNodeX?): List<Int> {
 
     val arr = ArrayList<Int>()
@@ -53,7 +53,6 @@ fun traverseInOrder(root: TreeNodeX?, arr: ArrayList<Int>) {
         return
     }
 
-
     if (root.left != null) {
         traverseInOrder(root.left!!, arr)
     }
@@ -65,7 +64,6 @@ fun traverseInOrder(root: TreeNodeX?, arr: ArrayList<Int>) {
     }
 
 }
-
 
 fun postorderTraversal(root: TreeNodeX?): List<Int> {
     val arr = ArrayList<Int>()
@@ -96,7 +94,7 @@ fun traversePost(root: TreeNodeX?, arr: ArrayList<Int>) {
 
 }
 
-
+////104. Maximum Depth of Binary Tree
 fun maxDepth(root: TreeNodeX?): Int {
 
     return if (root == null) {
@@ -113,6 +111,62 @@ fun maxDepth(root: TreeNodeX?): Int {
 
     }
 
+}
+
+
+//111. Minimum Depth of Binary Tree
+fun minDepth(root: TreeNodeX?): Int {
+
+//    if (root == null)
+//        return 0;
+//    if (root.left == null)
+//        return minDepth(root.right) + 1;
+//    if (root.right == null)
+//        return minDepth(root.left) + 1;
+//    return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+
+    if (root == null) {
+        return 0
+    }
+
+    val leftIndex = minDepth(root.left)
+    val rightIndex = minDepth(root.right)
+
+    if (leftIndex > rightIndex) {
+        leftIndex + 1
+    } else {
+        rightIndex + 1
+    }
+
+    return Math.min(leftIndex, rightIndex) + 1
+}
+
+
+///112. Path Sum
+fun hasPathSum(root: TreeNodeX?, targetSum: Int): Boolean {
+    if (root == null) {
+        return false
+    }
+    if (root.right == null && root.left == null && targetSum - root.value == 0) {
+        return true
+    }
+
+    return hasPathSum(root.left, targetSum - root.value)
+            || hasPathSum(root.right, targetSum - root.value)
+}
+////226. Invert Binary Tree
+fun invertTree(root: TreeNode?): TreeNode? {
+
+    if (root == null)
+        return null
+
+    val left = root.left
+    val right = root.right
+
+    root.right = invertTree(left)
+    root.left = invertTree(right)
+
+    return root
 }
 
 /////////////////////////////////////////////
@@ -187,11 +241,34 @@ fun isSymmetric(root: TreeNodeX?): Boolean {
 fun isMirror(node1: TreeNodeX?, node2: TreeNodeX?): Boolean {
 
     if (node1 == null && node2 == null) return true
-    return if (node1 != null && node2 != null
-        && node1.value === node2.value
-    )
-        isMirror(node1.left, node2.right)
-                && isMirror(node1.right, node2.left) else false
+
+    return if (node1 != null && node2 != null && node1.value == node2.value)
+
+        isMirror(node1.left, node2.right) && isMirror(node1.right, node2.left) else false
+}
+
+/////110. Balanced Binary Tree
+fun isBalanced(root: TreeNodeX?): Boolean {
+    if (root == null) {
+        return true
+    }
+    // isHeightEqual(root)
+    return Math.abs(isHeightEqual(root.left) - isHeightEqual(root.right)) <= 1
+            &&
+            isBalanced(root.left) &&
+            isBalanced(root.right)
+}
+
+fun isHeightEqual(node: TreeNodeX?): Int {
+
+    if (node == null) {
+        return 0
+    }
+
+    val leftHeight = isHeightEqual(node.left)
+    val rightHeight = isHeightEqual(node.right)
+
+    return Math.max(leftHeight, rightHeight) + 1
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -553,6 +630,7 @@ private fun dfs(root: TreeNodeX?, sb: StringBuilder, ans: MutableList<String>) {
     dfs(root.right, sb.append(root.value).append("->"), ans)
     sb.setLength(length)
 }
+
 /////////////////////////////////////////////////////
 //173. Binary Search Tree Iterator
 class BSTIterator(root: TreeNode?) {
