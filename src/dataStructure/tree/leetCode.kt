@@ -169,6 +169,44 @@ fun invertTree(root: TreeNode?): TreeNode? {
     return root
 }
 
+//235. Lowest Common Ancestor of a Binary Search Tree
+fun lowestCommonAncestor(root: TreeNodeX?, p: TreeNodeX?, q: TreeNodeX?): TreeNodeX? {
+    // it is the left sub tree
+    if (p?.value!! < root?.value!! && q?.value!! < root?.value!!){
+        return lowestCommonAncestor(root.left,p,q)
+    }else if (p.value > root.value && q?.value!! > root.value){ // it is in the right
+        return lowestCommonAncestor(root.right,p,q)
+    }else {
+        return root
+    }
+
+}
+
+//404. Sum of Left Leaves
+fun sumOfLeftLeaves(root: TreeNodeX?): Int {
+    if (root == null){
+        return 0
+    }
+
+    if (root.left == null){
+        return sumOfLeftLeaves(root.right);
+    }else{
+        var sum = 0
+
+        if (root.left!!.left == null && root.left!!.right == null) { // this leaf
+            sum += root.left?.value!!
+        }else{
+            sum += sumOfLeftLeaves(root.left)
+        }
+
+        sum += sumOfLeftLeaves(root.right)
+
+        return sum
+    }
+
+
+}
+
 /////////////////////////////////////////////
 fun isValidBSTwo(root: TreeNodeX?): Boolean {
 
