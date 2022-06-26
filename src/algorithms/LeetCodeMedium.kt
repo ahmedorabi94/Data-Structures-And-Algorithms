@@ -661,11 +661,70 @@ class SnapshotArray(length: Int) {
         return snapshotArray[index]!!.floorEntry(snap_id).value
     }
 
+}
+
+fun subarraySum(nums: IntArray, k: Int): Int {
+    var count = 0
+    var sum = 0
+    for (i in nums.indices) {
+        sum = nums[i]
+        if (sum == k) {
+            count ++
+        }
+        for (j in 1 + i until nums.size) {
+            sum += nums[j]
+            if (sum == k) {
+                count++
+            }
+        }
+    }
+
+
+    return count
+}
+
+
+//2034. Stock Price Fluctuation
+ class StockPrice {
+
+    private val timestampToPrice = TreeMap<Int, Int>()
+    private val pricesCount = TreeMap<Int, Int>()
+
+    fun update(timestamp: Int, price: Int) {
+        if (timestampToPrice.containsKey(timestamp)) {
+            val prevPrice = timestampToPrice[timestamp]!!
+            pricesCount.merge(
+                prevPrice, -1
+            ) { a: Int?, b: Int? -> Integer.sum(a!!, b!!) }
+            if (pricesCount[prevPrice] == 0) pricesCount.remove(prevPrice)
+        }
+
+        timestampToPrice[timestamp] = price
+        pricesCount.merge(price, 1) { a: Int?, b: Int? ->
+            Integer.sum(
+                a!!,
+                b!!
+            )
+        }
+    }
+
+    fun current(): Int {
+        return timestampToPrice.lastEntry().value
+    }
+
+    fun maximum(): Int {
+        return pricesCount.lastKey()
+    }
+
+    fun minimum(): Int {
+        return pricesCount.firstKey()
+    }
 
 }
 
 fun main() {
 
     ///   println(intToRoman(3))
-    println(letterCombinations("23"))
+    //  println(letterCombinations("23"))
+    println(subarraySum(intArrayOf(1, 1, 1), 2))
 }
