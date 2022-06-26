@@ -2,6 +2,7 @@ package algorithms
 
 import java.util.*
 
+
 //4. Median of Two Sorted Arrays
 fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
     val n: Int = nums1.size + nums2.size
@@ -122,6 +123,7 @@ fun expandAroundCenter(s: String, i: Int, j: Int): Int {
     }
     return j - i - 1
 }
+
 /////////////////////////////////////////////////////////////////////
 fun myAtoi(s: String): Int {
 
@@ -157,6 +159,7 @@ fun myAtoi(s: String): Int {
 
     return sign * result
 }
+
 // 8. String to Integer (atoi)
 fun myAtoiTwo(s: String): Int {
     var str = s
@@ -200,6 +203,7 @@ fun myAtoiTwo(s: String): Int {
 
 
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Input: num = 3
 //Output: "III"
@@ -223,6 +227,7 @@ fun intToRoman(num: Int): String {
     return sb.toString()
 
 }
+
 fun intToRomanTwo(num: Int): String? {
     val M = arrayOf("", "M", "MM", "MMM")
     val C = arrayOf("", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM")
@@ -230,6 +235,7 @@ fun intToRomanTwo(num: Int): String? {
     val I = arrayOf("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX")
     return M[num / 1000] + C[num % 1000 / 100] + X[num % 100 / 10] + I[num % 10]
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //36. Valid Sudoku
 fun isValidSudoku(board: Array<CharArray>): Boolean {
@@ -254,6 +260,7 @@ fun isValidSudoku(board: Array<CharArray>): Boolean {
 
     return true
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //767. Reorganize String
 fun reorganizeString(s: String?): String {
@@ -290,6 +297,7 @@ fun reorganizeString(s: String?): String {
     }
     return String(result)
 }
+
 //////////////////////////////////////////////////////////
 //300. Longest Increasing Subsequence
 fun lengthOfLIS(nums: IntArray): Int {
@@ -306,6 +314,7 @@ fun lengthOfLIS(nums: IntArray): Int {
 
     return len
 }
+
 fun binarySearch(nums: IntArray, low: Int, high: Int, target: Int): Int {
     var low = low
     var high = high
@@ -321,6 +330,7 @@ fun binarySearch(nums: IntArray, low: Int, high: Int, target: Int): Int {
     }
     return low
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 //289. Game of Life
 fun gameOfLife(board: Array<IntArray>): Unit {
@@ -350,6 +360,7 @@ fun gameOfLife(board: Array<IntArray>): Unit {
         }
     }
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //64. Minimum Path Sum
 fun minPathSum(grid: Array<IntArray>): Int {
@@ -373,6 +384,7 @@ fun minPathSum(grid: Array<IntArray>): Int {
 
     return dp[grid.size - 1][grid[0].size - 1]
 }
+
 /////////////////////////////////////////////////////////////////////////////////////
 //295. Find Median from Data Stream
 internal class MedianFinder {
@@ -402,9 +414,31 @@ internal class MedianFinder {
     }
 
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //273. Integer to English Words
-var v1: Array<String> = arrayOf<String>("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen")
+var v1: Array<String> = arrayOf<String>(
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen"
+)
 var v2 = arrayOf("", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety")
 fun numberToWords(num: Int): String? {
     var num = num
@@ -427,6 +461,7 @@ fun numberToWords(num: Int): String? {
     }
     return rst
 }
+
 fun helper(num: Int, i: Int): String {
     var num = num
     var str = ""
@@ -453,6 +488,7 @@ fun helper(num: Int, i: Int): String {
     }
     return str
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 //46. Permutations
@@ -464,6 +500,7 @@ fun permute(nums: IntArray): List<List<Int>> {
     helper(nums, result, ArrayList())
     return result
 }
+
 fun helper(nums: IntArray, result: MutableList<List<Int>>, temp: MutableList<Int>) {
     if (temp.size == nums.size) {
         result.add(ArrayList(temp))
@@ -478,6 +515,7 @@ fun helper(nums: IntArray, result: MutableList<List<Int>>, temp: MutableList<Int
         temp.removeAt(temp.size - 1)
     }
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //56. Merge Intervals
 fun merge(intervals: Array<IntArray>): Array<IntArray> {
@@ -503,11 +541,11 @@ fun merge(intervals: Array<IntArray>): Array<IntArray> {
 //17
 fun letterCombinations(digits: String): List<String> {
 
-    if (digits.isEmpty()){
+    if (digits.isEmpty()) {
         return emptyList()
     }
     val result = ArrayList<String>()
-    val map = HashMap<Char,String>()
+    val map = HashMap<Char, String>()
 
     map['1'] = ""
     map['2'] = "abc"
@@ -564,9 +602,70 @@ private fun helper(digits: String, idx: Int, sb: StringBuilder, result: ArrayLis
     }
 }
 
+//class SnapshotArray(length: Int) {
+//
+//  //  private val lists: Array<List<IntArray>>
+//    val array = IntArray(length){0}
+//    var snap_Id = 0
+//
+//    init {
+//      //val x = arrayof
+//    }
+//
+//
+//
+//    fun set(index: Int, `val`: Int) {
+//        array[index] = `val`
+//    }
+//
+//    fun snap(): Int {
+//      return  snap_Id++
+//      //  return snap_Id - 1
+//    }
+//
+//    fun get(index: Int, snap_id: Int): Int {
+//
+//        if (index == snap_id){
+//            return array.get(index)
+//        }
+//
+//        return array.get(snap_id)
+//    }
+//
+//
+//}
+
+class SnapshotArray(length: Int) {
+
+    var snapshotArray: Array<TreeMap<Int, Int>?>
+    var snap_id: Int
+
+    init {
+        snapshotArray = arrayOfNulls(length)
+        snap_id = 0
+        for (i in 0 until length) {
+            snapshotArray[i] = TreeMap()
+            snapshotArray[i]!![0] = 0
+        }
+    }
+
+    fun set(index: Int, `val`: Int) {
+        snapshotArray[index]!![snap_id] = `val`
+    }
+
+    fun snap(): Int {
+        return snap_id++
+    }
+
+    fun get(index: Int, snap_id: Int): Int {
+        return snapshotArray[index]!!.floorEntry(snap_id).value
+    }
+
+
+}
 
 fun main() {
 
- ///   println(intToRoman(3))
+    ///   println(intToRoman(3))
     println(letterCombinations("23"))
 }

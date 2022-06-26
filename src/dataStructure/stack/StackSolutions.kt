@@ -176,7 +176,7 @@ fun findAnagrams(s: String?, p: String): List<Int?>? {
     }
     val map_p = IntArray(26)
     for (element in p) {
-      //  map_p[element - 'a']++
+        //  map_p[element - 'a']++
         map_p[element - 'a'] = map_p[element - 'a'] + 1
     }
 //    map_p.forEach {
@@ -185,7 +185,7 @@ fun findAnagrams(s: String?, p: String): List<Int?>? {
 //    println('c' - 'a')
 //    println(map_p[0])
 //    println(map_p[1])
-   // println(map_p[2])
+    // println(map_p[2])
 
     for (i in 0 until s.length - p.length) {
         val map_s = IntArray(26)
@@ -268,7 +268,7 @@ fun equalStacks(h1: Array<Int>, h2: Array<Int>, h3: Array<Int>): Int {
 }
 
 
-fun findX(p: String){
+fun findX(p: String) {
     val map_p = IntArray(26)
     for (element in p) {
         //  map_p[element - 'a']++
@@ -277,20 +277,20 @@ fun findX(p: String){
     val list = ArrayList<Int>()
     map_p.forEach {
         print("${it} ")
-        if (it != 0){
+        if (it != 0) {
             list.add(it)
         }
     }
     val ref = list[0]
     var result = true
-    for (i in 1 until list.size){
-        if (ref != list[i]){
+    for (i in 1 until list.size) {
+        if (ref != list[i]) {
             result = false
             break
         }
     }
 
-   println(result)
+    println(result)
 }
 
 // "the sky is blue"
@@ -300,7 +300,7 @@ fun reverseWords(s: String): String {
 
     val x = s.trim().replace("\\s+".toRegex(), " ")
     val list = x.split(" ")
-    for(i in list.size -1 downTo 0){
+    for (i in list.size - 1 downTo 0) {
         result.append(list[i] + " ")
     }
 
@@ -328,13 +328,13 @@ fun removeDuplicateLetters(s: String): String {
     val sb = StringBuilder()
     val set = HashSet<Char>()
 
-    for (element in s){
+    for (element in s) {
 //        if (set.add(element)){
 //            sb.append(element)
 //        }
         set.add(element)
     }
-    set.forEach{
+    set.forEach {
         sb.append(it)
     }
 
@@ -373,15 +373,111 @@ fun missingElement(nums: IntArray, k: Int): Int {
     return nums[ei] + diff
 }
 
+
+fun evalRPN(tokens: Array<String>): Int {
+
+    // val sign
+    // val stack = Stack<String>()
+    var sum = 0
+    val nums = Stack<Int>()
+    //["2","1","+","3","*"]
+    for (token in tokens) {
+
+        when (token) {
+            "+" -> {
+                nums.push(nums.pop() + nums.pop())
+//                while (stack.isNotEmpty()) {
+//                    sum += stack.pop().toInt()
+//                }
+            }
+            "-" -> {
+//                while (stack.isNotEmpty()) {
+//                    sum -= stack.pop().toInt()
+//                }
+
+                val num = nums.pop()
+                nums.push(nums.pop() - num)
+            }
+            "*" -> {
+//                while (stack.isNotEmpty()) {
+//                    sum *= stack.pop().toInt()
+//                }
+                nums.push(nums.pop() * nums.pop())
+            }
+            "/" -> {
+//                while (stack.isNotEmpty()) {
+//                    sum /= stack.pop().toInt()
+//                }
+                val num = nums.pop()
+                nums.push(nums.pop() / num)
+            }
+            else -> {
+                nums.push(token.toInt())
+            }
+        }
+
+    }
+
+
+    return nums.pop()
+}
+
+
+fun decodeString(s: String): String {
+    //"3[a]2[bc]"
+    val stack = Stack<String>()
+    val nums = Stack<Int>()
+    var num = 0
+    var str = ""
+    for (c in s) {
+
+        if (c in '0'..'9') {
+            num = 10 * num + (c - '0')
+        } else if (c == '[') {
+            nums.push(num)
+            stack.push(str)
+            num = 0
+            str = ""
+
+        } else if (c == ']') {
+
+            val k = nums.pop()
+            var text = stack.pop()
+
+            for (i in 0 until k) {
+                text += str
+            }
+            str = text
+
+        } else {
+            str += c
+
+        }
+    }
+
+
+    return str
+}
+
+
 fun main(args: Array<String>) {
+
+    println(decodeString("3[a]2[bc]"))
+    println(decodeString("2[abc]3[cd]ef"))
+
+    // println(decodeString("3[a]2[bc]"))
+    println(decodeString("3[a2[c]]"))
     /* Enter your code here. Read input from STDIN. Print output to STDOUT. */
     // val scanner = Scanner(System.`in`)
     // println(checkSubarraySumTwo(intArrayOf(23, 2, 4, 6, 7), 6))
     //println(findAnagrams("cbaebabacd", "abc"))
-   // findX("abacbc")
-  //  println(reverseWords("a good   example"))
-  //  println(reverseOnlyLetters("ab-cd"))
-  //  println(removeDuplicateLetters("bcabc"))
-    println(missingElement(intArrayOf(4,7,9,10),1))
+    // findX("abacbc")
+    //  println(reverseWords("a good   example"))
+    //  println(reverseOnlyLetters("ab-cd"))
+    //  println(removeDuplicateLetters("bcabc"))
+    //  println(evalRPN(arrayOf("2","1","+","3","*")))
+    //  println(evalRPN(arrayOf("4","13","5","/","+")))
+    // println(evalRPN(arrayOf("2","1","+","3","*")))
+    //  println(missingElement(intArrayOf(4, 7, 9, 10), 1))
 }
 

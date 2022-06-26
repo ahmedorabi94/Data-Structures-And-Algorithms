@@ -2,6 +2,7 @@ package dataStructure.tree
 
 import dataStructure.linkedlist.hackerrankSolutions.leetcodeSol.ListNode
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import java.util.Queue as Queue1
 
@@ -206,6 +207,9 @@ fun sumOfLeftLeaves(root: TreeNodeX?): Int {
 
 
 }
+
+
+
 
 /////////////////////////////////////////////
 fun isValidBSTwo(root: TreeNodeX?): Boolean {
@@ -702,10 +706,48 @@ class BSTIterator(root: TreeNode?) {
 }
 
 
+//366. Find Leaves of Binary Tree
+fun findLeaves(root: TreeNodeX?): List<List<Int>> {
+    val result = ArrayList<ArrayList<Int>>()
+    depth(root, result)
+    return result
+}
+
+fun depth(root: TreeNodeX?,result : ArrayList<ArrayList<Int>>) : Int{
+
+    if (root == null){
+        return 0
+    }
+
+    val left = depth(root.left,result)
+    val right = depth(root.right,result)
+
+    val height = Math.max(left,right) + 1
+
+    // to make sure it is exist at all first leaves
+    if (result.size < height){
+        result.add(ArrayList())
+    }
+
+    result[height - 1 ].add(root.value)
+
+    return height
+}
+
 fun main() {
+
+    val root = TreeNodeX(1)
+    root.left = TreeNodeX(2)
+    root.right =TreeNodeX(3)
+
+    root.left!!.left = TreeNodeX(4)
+    root.left!!.right = TreeNodeX(5)
+
+    println(findLeaves(root))
+
     //   println(test(4))
     //  println(maximizeNumber(-999,5))
-    println(printAllSubarrays(intArrayOf(2, -2, 3, 0, 4, -7)))
+   // println(printAllSubarrays(intArrayOf(2, -2, 3, 0, 4, -7)))
 }
 
 
