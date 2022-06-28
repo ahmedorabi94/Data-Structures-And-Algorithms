@@ -1,8 +1,6 @@
 package algorithms
 
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
 
 
 fun twoSum(nums: IntArray, target: Int): IntArray {
@@ -438,6 +436,22 @@ class MinStack() {
         return minStack.peek()
     }
 
+}
+
+
+//26. Remove Duplicates from Sorted Array
+fun removeDuplicates(nums: IntArray?): Int {
+    if (nums == null || nums.isEmpty()) {
+        return 0
+    }
+    var i = 0
+    for (j in nums.indices) {
+        if (nums[i] != nums[j]) {
+            ++i
+            nums[i] = nums[j]
+        }
+    }
+    return i + 1
 }
 
 /////////////////////////////////////////////////////////////
