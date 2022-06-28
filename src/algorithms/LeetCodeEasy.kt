@@ -453,14 +453,78 @@ fun removeDuplicates(nums: IntArray?): Int {
     }
     return i + 1
 }
+//////////////////////////////
+///27. Remove Element
+//[3,2,2,3]  , 3
+//[2,2,_,_]
+
+//Input: nums = [0,1,2,2,3,0,4,2], val = 2
+//Output: 5, nums = [0,1,4,0,3,_,_,_]
+fun removeElement(nums: IntArray, `val`: Int): Int {
+    var i = 0
+
+    for (x in nums.indices){
+
+        if (nums[x] == `val`){
+            continue
+        }else{
+            nums[i]=nums[x]
+            i++
+        }
+    }
+
+    return i
+}
+
+//35. Search Insert Position
+//Input: nums = [1,3,5,6], target = 5
+//Output: 2
+fun searchInsert(nums: IntArray, target: Int): Int {
+
+    for (i in nums.indices){
+        if (nums[i] == target){
+            return i
+        }else{
+            if (nums[i] + 1 == target){
+                return i + 1
+            }else if (nums[i] - 1 == target){
+                return i
+            }
+        }
+    }
+
+    if (target > nums[nums.size -1]){
+        return nums.size
+    }
+
+    return 0
+}
+
+
+///53. Maximum Subarray
+fun maxSubArray(nums: IntArray): Int {
+    var sum = 0
+    var sum2 = Int.MIN_VALUE
+    for (i in nums.indices){
+        sum += nums[i]
+        sum2 = Math.max(sum,sum2)
+        if (sum < 0){
+            sum = 0
+        }
+    }
+
+    return sum2
+}
 
 /////////////////////////////////////////////////////////////
 fun main() {
 
-    val result = isPalindrome(121)
+  //  val result = isPalindrome(121)
 
     // val result = twoSumUsingHashMap(intArrayOf(2,7,11,15),9)
 
-    println(result)
+   // println(searchInsert(intArrayOf(1,3,5,6),5))
+    println(maxSubArray(intArrayOf(-2,1,-3,4,-1,2,1,-5,4)))
+   // println(removeElement(intArrayOf(0,1,2,2,3,0,4,2),2))
 }
 
