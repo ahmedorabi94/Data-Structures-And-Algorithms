@@ -2,8 +2,7 @@ package algorithms
 
 import dataStructure.linkedlist.hackerrankSolutions.leetcodeSol.ListNode
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
+
 
 //66. Plus One
 fun plusOne(digits: IntArray): IntArray {
@@ -171,10 +170,10 @@ fun generate(numRows: Int): List<List<Int>> {
     val result = ArrayList<ArrayList<Int>>()
     val row = ArrayList<Int>()
 
-    for (i in 0 until numRows){
-        row.add(0,1)
-        for (j in 1 until row.size - 1){
-            row[j] = row[j] + row[j+1]
+    for (i in 0 until numRows) {
+        row.add(0, 1)
+        for (j in 1 until row.size - 1) {
+            row[j] = row[j] + row[j + 1]
         }
 
         result.add(ArrayList(row))
@@ -193,43 +192,267 @@ fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
 
 //268. Missing Number
 fun missingNumber(nums: IntArray): Int {
-    var result = 0
+
     val size = nums.size
-//    Arrays.sort(nums)
-//                          //0,1,3
-//    for (i in 1..size){   //1,2,3
-//        if (nums[i-1] != 0){
-//            if (i+1 != nums[i+1]){
-//                return i
-//            }
-//        }
-//
-//
-//    }
 
     val set = nums.toSet()
     println(set)
 
-    for (i in 0..size){
-        if (!set.contains(i)){
+    for (i in 0..size) {
+        if (!set.contains(i)) {
             return i
         }
     }
 
-
-
     return 0
 }
+
+fun missingNumber2(nums: IntArray): Int {
+    var miss = 0
+    for (i in nums.indices) {
+        miss = miss xor i + 1
+        miss = miss xor nums[i]
+    }
+    return miss
+}
+
+
+//0, 10,5,2
+//852. Peak Index in a Mountain Array
+fun peakIndexInMountainArray(arr: IntArray): Int {
+    //  var result = 0
+    var left = 0
+    var right = arr.size - 1
+
+    while (left < right) {
+
+        val mid = (left + right) / 2
+
+        if (arr[mid + 1] > arr[mid]) {
+            left = mid + 1
+        } else {
+            right = mid
+        }
+
+
+    }
+
+    return left
+}
+
+//977. Squares of a Sorted Array
+fun sortedSquares(nums: IntArray): IntArray {
+    for (i in nums.indices) {
+        nums[i] = nums[i] * nums[i]
+    }
+
+    Arrays.sort(nums)
+
+    return nums
+}
+
+//844. Backspace String Compare
+fun backspaceCompare(s: String, t: String): Boolean {
+
+    val s_sb = StringBuilder()
+    val t_sb = StringBuilder()
+
+
+    //ab#c
+    //ab##
+    for (i in s.indices) {
+
+        if (s[i] == '#') {
+            continue
+        }
+
+        if ((i < s.length - 1 && s[i + 1] == '#')) {
+            continue
+        } else if ((i < s.length - 2 && s[i + 2] == '#')) {
+            continue
+        } else {
+            s_sb.append(s[i])
+        }
+
+    }
+
+    for (i in t.indices) {
+
+        if (t[i] == '#') {
+            continue
+        }
+
+        if ((i < t.length - 1 && t[i + 1] == '#')) {
+            continue
+        } else if ((i < t.length - 2 && t[i + 2] == '#')) {
+            continue
+        } else {
+            t_sb.append(t[i])
+        }
+
+    }
+
+    println(s_sb.toString())
+    println(t_sb.toString())
+
+    return compareTest(s) == compareTest(t)
+
+
+}
+
+fun compareTest(s : String) : String{
+    val sb = StringBuilder()
+
+    for (i in s.indices) {
+        if (s[i] != '#'){
+            sb.append(s[i])
+        }else {
+            sb.deleteCharAt(sb.length - 1)
+        }
+    }
+
+    return sb.toString()
+}
+
+//2022. Convert 1D Array Into 2D Array
+fun construct2DArray(original: IntArray, m: Int, n: Int): Array<IntArray>? {
+    if (original.size != m * n) return arrayOf()
+
+    val ans = Array(m) { IntArray(n) }
+
+    for (i in original.indices) {
+        ans[i / n][i % n] = original[i]
+    }
+    return ans
+}
+
+//287. Find the Duplicate Number
+fun findDuplicate(nums: IntArray): Int {
+    var slow = nums[nums[0]]
+    var fast = nums[nums[nums[0]]]
+    while (slow != fast) {
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+    }
+    slow = nums[0]
+    while (slow != fast) {
+        slow = nums[slow]
+        fast = nums[fast]
+    }
+    return slow
+}
+
+
+//442. Find All Duplicates in an Array
+fun findDuplicates(nums: IntArray): List<Int> {
+
+    val result = ArrayList<Int>()
+
+    for(i in 0 until nums.size){
+        val index = Math.abs(nums[i]) - 1
+
+        if(nums[index] < 0){
+            result.add(index + 1)
+        }
+
+        nums[index] = nums[index] * -1
+    }
+
+    return result
+
+}
+
+//128. Longest Consecutive Sequence
+fun longestConsecutive(nums: IntArray): Int {
+
+    if(nums.isEmpty()){
+        return 0
+    }
+
+    Arrays.sort(nums)
+
+    var counter = 1
+    var longCounter = 1
+
+    for(i in 1 until nums.size){
+        if(nums[i] != nums[i-1]){
+            if(nums[i] == nums[i-1] + 1){
+                counter++
+            }else{
+                longCounter = Math.max(counter,longCounter)
+                counter = 1
+            }
+        }
+    }
+
+
+    return Math.max(longCounter,counter)
+}
+
+
+//78. Subsets
+fun subsets(nums: IntArray): List<List<Int>> {
+
+    val result = ArrayList<ArrayList<Int>>()
+
+    dfs(nums,0,result,ArrayList())
+    return result
+
+}
+
+private fun dfs(nums : IntArray,k : Int,result : ArrayList<ArrayList<Int>> , temp : ArrayList<Int>){
+
+    result.add(ArrayList(temp))
+
+    for(i in k until nums.size){
+        temp.add(nums[i])
+        dfs(nums,i + 1,result,temp)
+        temp.removeAt(temp.size - 1)
+    }
+
+}
+
+//22. Generate Parentheses
+fun generateParenthesis(n: Int): List<String>? {
+    val ans: MutableList<String> = ArrayList()
+    dfs(n, n, StringBuilder(), ans)
+    return ans
+}
+
+private fun dfs(l: Int, r: Int, sb: StringBuilder, ans: MutableList<String>) {
+
+    if (l == 0 && r == 0) {
+        ans.add(sb.toString())
+        return
+    }
+    if (l > 0) {
+        sb.append("(")
+        dfs(l - 1, r, sb, ans)
+        sb.deleteCharAt(sb.length - 1)
+    }
+    if (l < r) {
+        sb.append(")")
+        dfs(l, r - 1, sb, ans)
+        sb.deleteCharAt(sb.length - 1)
+    }
+}
+
+
+
+
 
 fun main() {
 
     //  println(plusOne(intArrayOf(2,3,9)))
     //  println(mySqrt(8))
-   // val node = ListNode(3, ListNode(2, ListNode(0, ListNode(-4, ListNode(2)))))
-   // val node1 = ListNode(1, ListNode(2))
-   // println(hasCycle(node))
-  //  println(hasCycle(node1))
-
-    println(missingNumber(intArrayOf(0,1)))
-    println(missingNumber(intArrayOf(9,6,4,2,3,5,7,0,1)))
+    // val node = ListNode(3, ListNode(2, ListNode(0, ListNode(-4, ListNode(2)))))
+    // val node1 = ListNode(1, ListNode(2))
+    // println(hasCycle(node))
+   //// println(backspaceCompare("ab#c", "ad#c"))
+   // println(backspaceCompare("ab##", "c#d#"))
+   // println(backspaceCompare("a#c", "b"))
+    println(subsets(intArrayOf(1,2,3)))
+    // println(sortedSquares(intArrayOf(-7, -3, 2, 3, 11)))
+    //println(missingNumber(intArrayOf(0, 1)))
+    // println(missingNumber(intArrayOf(9, 6, 4, 2, 3, 5, 7, 0, 1)))
 }
