@@ -59,18 +59,43 @@ fun lengthOfLongestSubstring(s: String): Int {
 
     val set = HashSet<Char>()
 
-    while (end < s.length) {
-        if (set.add(s[end])) {
-            end++
-            maxLength = Math.max(maxLength, set.size)
-        } else {
-            set.remove(s[start])
-            start++
+
+    //abc        end = 3
+    //          start = 3
+
+//    while (end < s.length) {
+//        if (set.add(s[end])) {
+//            end++
+//            maxLength = Math.max(maxLength, set.size)
+//        } else {
+//            set.remove(s[start])
+//            start++
+//        }
+//    }
+
+    var count = 0
+    var max = 0
+    for (i in 0 until s.length){
+        if (set.add(s[i])){
+            count++
+            max = Math.max(max,set.size)
+        }else{
+          //  count--
+            while (set.isNotEmpty()){
+                set.remove(s[count])
+                count--
+            }
+
+            count =0
         }
     }
 
 
-    return maxLength
+
+
+
+
+    return max
 }
 
 // Input: s = "babad"
@@ -524,7 +549,8 @@ fun main() {
     // val result = twoSumUsingHashMap(intArrayOf(2,7,11,15),9)
 
    // println(searchInsert(intArrayOf(1,3,5,6),5))
-    println(maxSubArray(intArrayOf(-2,1,-3,4,-1,2,1,-5,4)))
+  //  println(maxSubArray(intArrayOf(-2,1,-3,4,-1,2,1,-5,4)))
+    println(lengthOfLongestSubstring("pwwkew"))
    // println(removeElement(intArrayOf(0,1,2,2,3,0,4,2),2))
 }
 

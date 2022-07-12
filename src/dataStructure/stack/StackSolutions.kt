@@ -460,13 +460,38 @@ fun decodeString(s: String): String {
 }
 
 
+fun encoding(str: String) {
+
+    var sb = StringBuilder()
+    for (x in str.indices){
+        var count = 1
+
+        if (x < str.length - 1 && str[x] == str[x + 1]){
+            count++
+            continue
+        }
+
+        sb.append("${count}" + str[x] )
+
+    }
+
+
+
+
+    println(sb.toString())
+}
+
+
 fun main(args: Array<String>) {
 
-    println(decodeString("3[a]2[bc]"))
-    println(decodeString("2[abc]3[cd]ef"))
+   // println(encoding("abbaaaac"))
+
+
+   // println(decodeString("3[a]2[bc]"))
+   // println(decodeString("2[abc]3[cd]ef"))
 
     // println(decodeString("3[a]2[bc]"))
-    println(decodeString("3[a2[c]]"))
+    //println(decodeString("3[a2[c]]"))
     /* Enter your code here. Read input from STDIN. Print output to STDOUT. */
     // val scanner = Scanner(System.`in`)
     // println(checkSubarraySumTwo(intArrayOf(23, 2, 4, 6, 7), 6))

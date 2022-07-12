@@ -1,6 +1,7 @@
 package algorithms
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 //4. Median of Two Sorted Arrays
@@ -494,14 +495,14 @@ fun helper(num: Int, i: Int): String {
 //46. Permutations
 fun permute(nums: IntArray): List<List<Int>> {
     if (nums.isEmpty()) {
-        return Collections.emptyList()
+        return emptyList()
     }
-    val result: MutableList<List<Int>> = ArrayList()
+    val result = ArrayList<ArrayList<Int>>()
     helper(nums, result, ArrayList())
     return result
 }
 
-fun helper(nums: IntArray, result: MutableList<List<Int>>, temp: MutableList<Int>) {
+fun helper(nums: IntArray, result: ArrayList<ArrayList<Int>>, temp: ArrayList<Int>) {
     if (temp.size == nums.size) {
         result.add(ArrayList(temp))
         return
@@ -669,7 +670,7 @@ fun subarraySum(nums: IntArray, k: Int): Int {
     for (i in nums.indices) {
         sum = nums[i]
         if (sum == k) {
-            count ++
+            count++
         }
         for (j in 1 + i until nums.size) {
             sum += nums[j]
@@ -685,7 +686,7 @@ fun subarraySum(nums: IntArray, k: Int): Int {
 
 
 //2034. Stock Price Fluctuation
- class StockPrice {
+class StockPrice {
 
     private val timestampToPrice = TreeMap<Int, Int>()
     private val pricesCount = TreeMap<Int, Int>()
@@ -720,6 +721,174 @@ fun subarraySum(nums: IntArray, k: Int): Int {
         return pricesCount.firstKey()
     }
 
+}
+
+
+//////15. 3Sum
+fun threeSum(nums: IntArray): List<List<Int>> {
+
+    if (nums.size < 3) {
+        return emptyList()
+    }
+    val result = ArrayList<ArrayList<Int>>()
+
+
+    Arrays.sort(nums)
+
+    for (i in nums.indices) {
+       // val first = i
+        var sec = i + 1
+        var third = nums.size - 1
+
+        while (sec < third) {
+
+            if (i == 0 || nums[i] != nums[i - 1]) {
+                val sum = nums[i] + nums[sec] + nums[third]
+
+                if (sum == 0) {
+                    val list = ArrayList<Int>()
+                    list.add(nums[i])
+                    list.add(nums[sec])
+                    list.add(nums[third])
+                    result.add(list)
+
+                    val startVal = nums[sec]
+                    val endVal = nums[third]
+                    while (sec < third && startVal == nums[sec]) {
+                        sec++
+                    }
+                    while (third > sec && endVal == nums[third]) {
+                        third--
+                    }
+
+                } else if (sum < 0) {
+                    sec++
+                } else {
+                    third--
+                }
+            }
+
+
+        }
+
+    }
+
+
+
+    return result
+}
+
+fun threeSumx(nums: IntArray): List<List<Int>> {
+    val result = ArrayList<ArrayList<Int>>()
+    Arrays.sort(nums)
+    for (i in nums.indices) {
+        if (i == 0 || nums[i] != nums[i - 1]) {
+            var start = i + 1
+            var end = nums.size - 1
+            while (start < end) {
+                val sum = nums[i] + nums[start] + nums[end]
+                if (sum == 0) {
+                    val tmp = ArrayList<Int>()
+                    tmp.add(nums[i])
+                    tmp.add(nums[start])
+                    tmp.add(nums[end])
+                    result.add(tmp)
+                    val startVal = nums[start]
+                    val endVal = nums[end]
+                    while (start < end && startVal == nums[start]) {
+                        start++
+                    }
+                    while (end > start && endVal == nums[end]) {
+                        end--
+                    }
+                } else if (sum < 0) {
+                    start++
+                } else {
+                    end--
+                }
+            }
+        }
+    }
+    return result
+}
+
+fun threeSumClosest(nums: IntArray, target: Int): Int {
+    if (nums.size == 0) {
+        return 0
+    }
+    Arrays.sort(nums)
+    var min = Int.MAX_VALUE
+    var closed = 0
+    for (i in nums.indices) {
+        if (i == 0 || nums[i] != nums[i - 1]) {
+            var start = i + 1
+            var end = nums.size - 1
+            while (start < end) {
+                val sum = nums[i] + nums[start] + nums[end]
+                if (Math.abs(sum - target) < min) {
+                    min = Math.abs(sum - target)
+                    closed = sum
+                }
+                if (sum < target) {
+                    start++
+                } else { // >= target
+                    end--
+                } //if
+            } //while
+        } //if
+    } //for
+    return closed
+}
+
+fun fourSum(nums: IntArray, target: Int): List<List<Int>>? {
+    val result: MutableList<List<Int>> = LinkedList()
+    if (nums.size < 4) {
+        return result
+    }
+    Arrays.sort(nums)
+    val max = nums[nums.size - 1]
+    for (i in nums.indices) {
+        if (i > 0 && nums[i] == nums[i - 1]) {
+            continue
+        }
+        if (nums[i] + 3 * max < target) {
+            continue  // nums[i] is too small
+        }
+        if (nums[i] * 4 > target) {
+            break //nums[i] is too bigger
+        }
+        for (j in i + 1 until nums.size) {
+            if (j > i + 1 && nums[j] == nums[j - 1]) {
+                continue
+            }
+            var start = j + 1
+            var end = nums.size - 1
+            while (start < end) {
+                val sum = nums[i] + nums[j] + nums[start] + nums[end]
+                if (sum == target) {
+                    val tmp: MutableList<Int> = LinkedList()
+                    tmp.add(nums[i])
+                    tmp.add(nums[j])
+                    tmp.add(nums[start])
+                    tmp.add(nums[end])
+                    result.add(tmp)
+                    val startVal = nums[start]
+                    val endVal = nums[end]
+                    while (start < end && startVal == nums[start]) {
+                        start++
+                    }
+                    while (start < end && endVal == nums[end]) {
+                        end--
+                    }
+                } else if (sum < target) {
+                    start++
+                } else {
+                    end--
+                }
+            }
+        }
+    }
+    return result
 }
 
 fun main() {

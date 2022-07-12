@@ -77,7 +77,7 @@ fun search(board: Array<CharArray>, word: String, i: Int, j: Int, matched: Int):
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-private class TrieNode {
+class TrieNode {
     var isLeaf: Boolean
     var children: HashMap<Char, TrieNode?>
     var word: String? = null

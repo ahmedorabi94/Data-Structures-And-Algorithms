@@ -256,8 +256,7 @@ fun validate(root: TreeNodeX?, min: Long, max: Long): Boolean {
     }
     return if (root.value < min || root.value > max) {
         false
-    } else validate(root.left, min, root.value.toLong() - 1)
-            && validate(root.right, root.value.toLong() + 1, max)
+    } else validate(root.left, min, root.value.toLong() - 1) && validate(root.right, root.value.toLong() + 1, max)
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -316,7 +315,7 @@ fun isHeightEqual(node: TreeNodeX?): Int {
 //////////////////////////////////////////////////////////////////////
 //102. Binary Tree Level Order Traversal
 fun levelOrder(root: TreeNode2?): List<List<Int>> {
-    val result: MutableList<List<Int>> = LinkedList()
+    val result = ArrayList<ArrayList<Int>>()
     if (root == null) {
         return result
     }
@@ -327,7 +326,7 @@ fun levelOrder(root: TreeNode2?): List<List<Int>> {
     while (queue.size > 0) {
 
         val n: Int = queue.size
-        val add: MutableList<Int> = LinkedList()
+        val add = ArrayList<Int>()
 
         for (i in 0 until n) {
             val node: TreeNode2 = queue.remove()
@@ -348,6 +347,7 @@ fun levelOrder(root: TreeNode2?): List<List<Int>> {
 }
 //////////////////////////////////////////////////////////////////////
 
+//103. Binary Tree Zigzag Level Order Traversal
 fun zigzagLevelOrder(root: TreeNodeX?): List<List<Int>> {
     val res: MutableList<List<Int>> = ArrayList()
     if (root == null) return res
