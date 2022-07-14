@@ -743,7 +743,7 @@ fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
     var parent = newNode
     parent.next = head
 
-    while (length > 0){
+    while (length > 0) {
         parent = parent.next!!
         length--
     }
@@ -753,6 +753,148 @@ fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
     return newNode.next
 }
 
+fun maxProductx(nums: IntArray): Int {
+    var sum = 1
+    var result = Int.MIN_VALUE
+
+    for (i in nums.indices) {
+        sum *= nums[i]
+        result = Math.max(sum, result)
+        if (sum <= 0 && nums[i] >= 0) {
+            sum = 1
+        }
+    }
+
+    return result
+}
+
+
+//198. House Robber
+fun rob(nums: IntArray): Int {
+
+    if (nums.isEmpty()) {
+        return 0
+    }
+
+    if (nums.size == 1) {
+        return nums[0]
+    }
+
+    if (nums.size == 2) {
+        return Math.max(nums[0], nums[1])
+    }
+
+    val dp = IntArray(nums.size)
+    dp[0] = nums[0]
+    dp[1] = Math.max(nums[0], nums[1])
+
+    for (i in 2 until dp.size) {
+        dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1])
+    }
+
+
+
+    return dp[nums.size - 1]
+}
+
+
+//2,3,-2,4
+//6
+//152. Maximum Product Subarray
+fun maxProduct(nums: IntArray?): Int {
+    if (nums == null || nums.isEmpty()) return 0
+
+    var maxProduct = nums[0] //2
+    var max_temp = nums[0]
+    var min_temp = nums[0]
+
+    for (i in 1 until nums.size) {
+        val a = nums[i] * max_temp // 6 , -12
+        val b = nums[i] * min_temp // 6 , -6
+
+        max_temp = Math.max(Math.max(a, b), nums[i]) //6 ,,-2
+        min_temp = Math.min(Math.min(a, b), nums[i])   // 3 ,-6
+
+        maxProduct = Math.max(maxProduct, max_temp)  //  6
+    }
+    return maxProduct
+}
+
+//139. Word Break
+fun wordBreak(s: String, wordDict: List<String>): Boolean {
+   // val wordDictSet: Set<String> = HashSet(wordDict)
+    val dp = BooleanArray(s.length + 1)
+    dp[0] = true
+    for (i in 0..s.length) {
+        for (j in 0 until i) {
+            if (dp[j] && wordDict.contains(s.substring(j, i))) {
+                dp[i] = true
+                break
+            }
+        }
+    }
+    return dp[s.length]
+}
+
+fun uniquePaths(m: Int, n: Int): Int {
+    val paths = Array(m) { IntArray(n) }
+
+    for (i in 0 until m) {
+        paths[i][0] = 1
+    }
+    for (i in 0 until n) {
+        paths[0][i] = 1
+    }
+
+    for (i in 1 until m) {
+        for (j in 1 until n) {
+            paths[i][j] = paths[i - 1][j] + paths[i][j - 1]
+        }
+    }
+
+    return paths[m - 1][n - 1]
+}
+
+//91. Decode Ways
+fun numDecodings(s: String): Int {
+
+    val dp = IntArray(s.length + 1)
+
+    dp[0] = 1
+    dp[1] = if (s[0] == '0') 0 else 1
+
+    for (i in 2..s.length) {
+        val oneDigit = s.substring(i - 1, i).toInt()
+        val twoDigit = s.substring(i - 2, i).toInt()
+
+        if (oneDigit >= 1) {
+            dp[i] += dp[i - 1]
+        }
+
+        if (twoDigit >= 10 && twoDigit <= 26) {
+            dp[i] += dp[i - 2]
+        }
+    }
+
+    return dp[s.length]
+}
+
+//322. Coin Change
+fun coinChange(coins: IntArray, amount: Int): Int {
+
+    val dp = IntArray(amount + 1)
+    Arrays.fill(dp, amount + 1)
+    dp[0] = 0
+    for (i in 0..amount) {
+        for (j in coins.indices) {
+            if (coins[j] <= i) {
+                dp[i] = Math.min(dp[i], 1 + dp[i - coins[j]])
+            }
+        }
+    }
+
+    return if (dp[amount] > amount) -1 else dp[amount]
+}
 
 
 fun main() {
