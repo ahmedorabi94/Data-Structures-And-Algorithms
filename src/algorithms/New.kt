@@ -4,6 +4,7 @@ import dataStructure.linkedlist.hackerrankSolutions.leetcodeSol.ListNode
 import dataStructure.tree.TreeNode
 import dataStructure.tree.TreeNodeX
 import java.util.*
+import kotlin.collections.HashSet
 
 
 //66. Plus One
@@ -188,8 +189,25 @@ fun generate(numRows: Int): List<List<Int>> {
 //349. Intersection of Two Arrays
 fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
 
+    val set = HashSet<Int>()
 
-    return IntArray(0)
+    for (i in nums1.indices){
+        for (j in 0 until nums2.size){
+            if (nums1[i] == nums2[j]){
+                set.add(nums1[i])
+            }
+        }
+    }
+    val result = IntArray(set.size)
+
+    var i = 0
+    set.forEach {
+        result[i] =it
+        i++
+    }
+
+
+    return result
 }
 
 //268. Missing Number
